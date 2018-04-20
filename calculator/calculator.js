@@ -6,6 +6,7 @@ function add (num1, num2){
     value2Array = [];
 
     outcome = num1+num2;
+    outcome = Math.round(outcome * 1000000) / 1000000;
     return outcome;
 }
 function subtract (num1, num2) {
@@ -13,6 +14,7 @@ function subtract (num1, num2) {
     value2Array = [];
 
     outcome = num1-num2;
+    outcome = Math.round(outcome * 1000000) / 1000000;
     return outcome;
 }
 function multiply (num1, num2) {
@@ -20,18 +22,30 @@ function multiply (num1, num2) {
     value2Array = [];
 
     outcome = num1*num2;
+    outcome = Math.round(outcome * 1000000) / 1000000;
     return outcome;
 }
 function divide (num1,num2) {
     operatorCounter++;
     value2Array = [];
-
+    if (num2==0) {
+        document.getElementById("result_display").value = "Plz no divide by 0";
+        return;
+    }
     outcome = num1/num2;
+    outcome = Math.round(outcome * 1000000) / 1000000;
     return outcome;
 }
 
 
 function operate(operator,num1,num2) {
+    if (value1 === undefined) {
+        return;
+    }
+    else if (value2===undefined){
+         document.getElementById("result_display").value = value1;
+         return;
+    }
     if (operator==="+") {
         document.getElementById("result_display").value = add(num1,num2);
         return add(num1,num2);
@@ -133,21 +147,33 @@ function displayOperator (i) {
     
     if (i==1) {
         document.getElementById("result_display").value = "+";
+        if (typeof value1 === "number" && typeof value2 === "number") {
+         outcome = (operate(operator,value1,value2));   
+        }
         operator = "+";
         return operator;
     }
     else if (i==2) {
         document.getElementById("result_display").value = "-";
+        if (typeof value1 === "number" && typeof value2 === "number") {
+         outcome = (operate(operator,value1,value2));   
+        }
         operator = "-";
         return operator;
     }
     else if (i==3) {
+        if (typeof value1 === "number" && typeof value2 === "number") {
+         outcome = (operate(operator,value1,value2));   
+        }
         document.getElementById("result_display").value = "*";
         operator = "*";
         return operator;
     }
     else {
         document.getElementById("result_display").value = "/";
+        if (typeof value1 === "number" && typeof value2 === "number") {
+         outcome = (operate(operator,value1,value2));   
+        }
         operator = "/";
         return operator;
     }
