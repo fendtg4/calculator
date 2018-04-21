@@ -1,1 +1,1 @@
-This project was done to display basic web development skills gained in the Odin Project. I used HTML DOM manipulation, along with Javascript coding to make a calculator.
+This project was done to display basic web development skills gained in the Odin Project. I used HTML DOM manipulation, along with Javascript coding to make a calculator. I used some basic CSS to make the calculator resemble a real tool.

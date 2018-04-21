@@ -80,6 +80,7 @@ for (let i=1;i<5;i++) {
     var operatorButtons = document.createElement("button");
     buttonArea.appendChild(operatorButtons);
     operatorButtons.id = ("operator"+i);
+    document.getElementById("operator" + i).className ="operator";
     if (i==1) {
         operatorButtons.innerHTML = ("+");
     }
@@ -121,9 +122,26 @@ clearButton.id = ("clear_button");
 clearButton.onclick = function () {clear()};
 clearButton.innerHTML = "clear";
 
+var decimalButton = document.createElement("button");
+buttonArea.appendChild(decimalButton);
+decimalButton.id = ("decimal_button");
+decimalButton.onclick = function () {addDecimal()};
+decimalButton.innerHTML = ".";
+
+var backButton = document.createElement("button");
+buttonArea.appendChild(backButton);
+backButton.id = ("back_button");
+backButton.onclick = function () {backspace()};
+backButton.innerHTML= "<-";
+
 function displayValue (i) {
     if (typeof value1 === "number" && typeof operator === "string" && operatorCounter==0) {
         value2Array.push(i);
+        if (value2Array.indexOf(".")>-1) {
+        value2 = value2Array.join('');
+        document.getElementById("result_display").value = value2;
+        return;
+    }
         value2 = parseInt(value2Array.join(''))+0;
         document.getElementById("result_display").value = value2;
     }
@@ -131,11 +149,23 @@ function displayValue (i) {
         
         value1 = outcome;
         value2Array.push(i);
+        if (value2Array.indexOf(".")>-1) {
+        value2 = value2Array.join('');
+        value2 = parseFloat(value2);
+        document.getElementById("result_display").value = value2;
+        return;
+    }
         value2 = parseInt(value2Array.join(''))+0;
         document.getElementById("result_display").value = value2;
     }
     else {
     value1Array.push(i);
+    if (value1Array.indexOf(".")>-1) {
+        value1 = value1Array.join('');
+        value1 = parseFloat(value1);
+        document.getElementById("result_display").value = value1;
+        return;
+    }
     value1 = parseInt(value1Array.join(''))+0;
     document.getElementById("result_display").value = value1;
     return;
@@ -162,10 +192,10 @@ function displayOperator (i) {
         return operator;
     }
     else if (i==3) {
+        document.getElementById("result_display").value = "*";
         if (typeof value1 === "number" && typeof value2 === "number") {
          outcome = (operate(operator,value1,value2));   
         }
-        document.getElementById("result_display").value = "*";
         operator = "*";
         return operator;
     }
@@ -184,5 +214,71 @@ function clear () {
     location.reload();
     return;
 }
+ function addDecimal () {
 
+    if (value2Array.length===0) {
+        if (value1Array.indexOf(".")>-1) {
+            return;
+        }
+        value1Array.push(".");
+        let tempValue1 = value1 + ".";
+        document.getElementById("result_display").value = tempValue1;
+    }
+    else {
+         if (value2Array.indexOf(".")>-1) {
+            return;
+        }
+     value2Array.push(".");
+     let tempValue2 = value2 + ".";
+     document.getElementById("result_display").value = tempValue2;
+   
+    }
+    return;
+ }
+
+ function backspace () {
+    if (value1==undefined) {
+        return;
+    }
+    if (value2Array.length===0) {
+        if (value1Array.length==1) {
+            value1Array = [];
+            value1 = undefined;
+            document.getElementById("result_display").value = "";
+            return;
+        }
+        if (value1Array.indexOf(".")>-1) {
+        value1Array.pop();
+        value1 = value1Array.join('');
+        value1 = parseFloat(value1);
+        document.getElementById("result_display").value = value1;
+        return;
+    }
+        value1Array.pop();
+        value1 = parseInt(value1Array.join(''))+0;
+        document.getElementById("result_display").value = value1;
+    }
+
+
+    else {
+        if (value2Array.length==1) {
+            value2Array = [];
+            value2 = undefined;
+            document.getElementById("result_display").value = "";
+            return;
+        }
+      if (value2Array.indexOf(".")>-1) {
+        value2Array.pop();
+        value2 = value2Array.join('');
+        value2 = parseFloat(value2);
+        document.getElementById("result_display").value = value2;
+        return;
+    }
+        value2Array.pop();
+        value2 = parseInt(value2Array.join(''))+0;
+        document.getElementById("result_display").value = value2;
+     
+    }
+    return;
+ }
  
